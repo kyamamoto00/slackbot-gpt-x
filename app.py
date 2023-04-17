@@ -54,6 +54,14 @@ def handle_message_events(client, message):
     if message.get("user") is None:
         return
 
+    ##########################################
+    # React only if there is a mentions
+    bot_info = client.auth_test()  # Get bot information
+    bot_user_id = bot_info['user_id']  # Get bot user ID
+    if message.get("text").find(f"<@{bot_user_id}>") == -1:
+        return
+    ##########################################
+
     # Create ChatGPT instances
     chatgpt = ChatGPT(max_tokens, model)
 
